@@ -1,0 +1,7 @@
+absl-py
+brewer2mpl
+matplotlib==3.4.3
+numpy
+pandas
+scipy
+seaborn
