@@ -1,0 +1,15 @@
+[package]
+name = "erdos-experiments"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+abomonation = "0.7.3"
+abomonation_derive = "0.5.0"
+clap = "2.33.0"
+csv = "1.1.6"
+erdos = { git = "https://github.com/erdos-project/erdos.git", rev = "3b1235a" }
+serde = "1.0.115"
+tracing = "0.1.29"
