@@ -35,7 +35,7 @@ python3 plot_challenge_deadline_paper.py --base_dir=../experiments/challenge/dea
 mv deadline-bbox.pdf graphs/
 
 # Figure 11: Barchart of collisions.
-python3 generate_collision_stats.py --base_dir=..//experiments/challenge/deadlines_comparison_with_accurate_lidar/ --filter_carla_cola=True --towns=1 --start_route=1 --end_route=9 --num_reps=7
+python3 generate_collision_stats.py --base_dir=../experiments/challenge/deadlines_comparison_with_accurate_lidar/ --filter_carla_cola=True --towns=1 --start_route=1 --end_route=9 --num_reps=7
 python3 plot_challenge_collisions_barchart.py
 mv pylot_collisions.pdf graphs/
 
