@@ -31,7 +31,7 @@ and execute it.
 We provide a Docker image with ERDOS, Pylot and CARLA simulator already setup.
 
 ```console
-docker pull erdosproject/pylot
+docker pull erdosproject/pylot:v0.3.2
 nvidia-docker run -itd --name pylot -p 20022:22 erdosproject/pylot /bin/bash
 ```
 To test if the image runs on your hardware, please start the simulator in the
@@ -107,6 +107,9 @@ this by running the following commands:
 ```console
 # Connect to the Pylot container.
 nvidia-docker exec -i -t pylot /bin/bash
+cd ~/workspace/pylot ; git pull ; git checkout de30da016cd406369b782054c3de6acec45a02d7
+cd ~/workspace/pylot/dependencies/frenet_optimal_trajectory_planner ; git pull ; rm -r build ; ./build.sh
+cd ~/worskpace ; rm -rf leaderboard ; git clone https://github.com/erdos-project/leaderboard.git
 cd ~/workspace/erdos
 pip3 uninstall erdos
 git pull
@@ -157,6 +160,7 @@ cd ~/workspace/
 cd ~/workspace/pylot
 # Checkout the branch, which contains the Pylot code with a no-op policy.
 git checkout -b deadlines origin/deadlines
+cd ~/workspace/
 # Run Pylot with a no-op policy.
 ./leaderboard/scripts/run_policy_experiments.sh dedicated
 mkdir -p ~/workspace/reproduced_experiments/challenge/comparison_w_and_wo_policy
