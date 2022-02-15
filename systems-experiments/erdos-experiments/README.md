@@ -60,5 +60,3 @@ How each file relates to the figures:
 
 Note that the synthetic pipeline results should have much lower latency than
 figure 8c in the paper draft due to improvements in ERDOS's implementation.
-
-## Plotting (TODO)
