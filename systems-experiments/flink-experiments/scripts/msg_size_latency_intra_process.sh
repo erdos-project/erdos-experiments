@@ -12,11 +12,11 @@ TMP_DIR="/tmp/erdos-experiments/flink/"
 mkdir -p "$OUT_DIR"
 mkdir -p "$TMP_DIR"
 
-csv_filename="$OUT_DIR/msg-size-latency-$type.csv"
+csv_filename="$OUT_DIR/msg-size-latency-intra-process.csv"
 tmp_files=()
 for msg_size in 10000 100000 1000000 10000000
 do
-    filename="$TMP_DIR/msg-size-$msg_size-$type.csv"
+    filename="$TMP_DIR/msg-size-$msg_size-intra-process.csv"
     tmp_files+=("$filename")
     mvn exec:java -Dexec.mainClass=flink_experiments.BroadcastExperiment \
         -Dexec.args="--frequency=$FREQUENCY --msg-size=$msg_size --samples=$NUM_MSGS --warmup-samples=$NUM_WARMUP_MSGS --num-receivers=1 --output=$filename"
