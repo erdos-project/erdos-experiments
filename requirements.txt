@@ -1,5 +1,6 @@
 absl-py
 brewer2mpl
+fire
 matplotlib==3.4.3
 numpy
 pandas
