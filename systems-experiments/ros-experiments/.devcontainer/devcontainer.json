@@ -15,7 +15,7 @@
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
     },
-    "postCreateCommand": "bash /ros-experiments/scripts/docker-setup.sh",
+    "postCreateCommand": "bash /ros-experiments/scripts/setup_container.sh",
     "workspaceMount": "src=${localWorkspaceFolder},dst=/ros-experiments,type=bind,consistency=cached",
     "workspaceFolder": "/ros-experiments"
 }

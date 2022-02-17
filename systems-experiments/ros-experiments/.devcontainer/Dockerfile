@@ -1,4 +1,4 @@
-FROM osrf/ros:noetic
+FROM ros:noetic
 
 RUN apt-get update && apt-get install -q -y \
     openssh-client
