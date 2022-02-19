@@ -27,6 +27,7 @@ HATCH_DICT["Flink \([Ii]ntra"] = "...."
 def plot_synthetic_pipeline(
     erdos_intra_process_filename: str,
     erdos_inter_process_filename: str,
+    ros_inter_process_filename: str,
     output_filename: str = "graphs/synthetic_pipeline_latency.pdf",
 ):
     intra_process_csvs = {
@@ -35,6 +36,7 @@ def plot_synthetic_pipeline(
 
     inter_process_csvs = {
         "ERDOS (inter)": erdos_inter_process_filename,
+        "ROS": ros_inter_process_filename,
     }
 
     intra_process_df = systems_utils.load_csvs(intra_process_csvs)
@@ -76,7 +78,7 @@ def plot_synthetic_pipeline(
 
     ax1.set_ylim(ax1.get_ylim()[::-1])
     # ax1.set_xlim(0, 4)
-    plt.xlim(0, 20)
+    plt.xlim(0, 10)
     # ax1.set_xticks(list(range(0, 14, 4)))
 
     ax2 = fig.add_subplot(1, 2, 2, sharey=ax1)
@@ -101,7 +103,7 @@ def plot_synthetic_pipeline(
     plt.setp(ax2.get_yticklabels(), visible=False)
     plt.title("Inter-Process", fontsize=mpl.rcParams["font.size"])
 
-    ax2.set_xlim(0, 400)
+    ax2.set_xlim(0, 10)
     ax2.set_ylim(ax2.get_ylim()[::-1])
     ax2.legend().set_visible(False)
     # ax2.set_xticks([0, 20, 40, 60])

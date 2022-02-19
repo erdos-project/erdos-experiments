@@ -43,8 +43,8 @@ python3 plot_broadcast_latency.py \
 # Figure 8c: Latency for a synthetic pipeline at different scales.
 python3 plot_synthetic_pipeline.py \
     "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-intra-process.csv" \
-    "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-inter-process.csv"
-
+    "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/ros/synthetic-pipeline-inter-process.csv" 
 # Figure 9: Mode changes for detection and planning.
 python3 plot_mode_changes.py --base_dir=../experiments/challenge/mode_changes/ --file_format=pdf --paper_mode
 mv pylot-mode-changes.pdf graphs/
