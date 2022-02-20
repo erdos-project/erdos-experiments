@@ -3,8 +3,8 @@
 set -x
 
 FREQUENCY=30
-WARMUP_SAMPLES=10
-SAMPLES=10
+WARMUP_SAMPLES=100
+SAMPLES=10000
 
 OUT_DIR="results/$(hostname)/"
 TMP_DIR="/tmp/erdos-experiments/"
