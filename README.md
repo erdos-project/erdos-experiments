@@ -1,5 +1,7 @@
-This repository contains scripts to download our experiment data, to reproduce
-our figures, and instructions on how to reproduce our experiments.
+This repository contains scripts to download experiment data, to reproduce
+figures, and instructions on how to reproduce experiments for
+*D3: A Dynamic Deadline-Driven Approach for Building Autonomous Vehicles*,
+which is to appear at [EuroSys 2022](https://2022.eurosys.org/).
 
 # Downloading log data of experiments and generating graphs
 
