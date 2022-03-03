@@ -2,7 +2,7 @@ use clap::Arg;
 use erdos::{
     dataflow::{
         operators::{Concat, FlatMapOperator},
-        stream::{ExtractStream, Stream},
+        stream::{ExtractStream, OperatorStream},
     },
     node::{Node, NodeId},
     Configuration, OperatorConfig,
@@ -30,14 +30,21 @@ fn connect_map(
     msg_size: usize,
     assigned_node: NodeId,
     is_sensor: bool,
-    stream: &Stream<BinaryData>,
-) -> Stream<BinaryData> {
+    stream: &OperatorStream<BinaryData>,
+) -> OperatorStream<BinaryData> {
+    let name_string = name.to_string();
     erdos::connect_one_in_one_out(
         move || {
+            let name_string = name_string.clone();
             FlatMapOperator::new(move |input_data: &BinaryData| {
                 let mut output_data = BinaryData::new(msg_size);
                 if !is_sensor {
-                    output_data.send_time = input_data.send_time
+                    output_data.send_time = input_data.send_time;
+                    let latency = erdos_experiments::ns_since_unix_epoch() - output_data.send_time;
+                    let latency_us = latency as f64 / 1e3;
+                    tracing::info!("{}: latency: {}", name_string, latency_us);
+                } else {
+                    tracing::info!("{}: latency: 0", name_string);
                 }
                 std::iter::once(output_data)
             })
@@ -52,11 +59,13 @@ fn connect_join(
     name: &str,
     msg_size: usize,
     assigned_node: NodeId,
-    left_stream: &Stream<BinaryData>,
-    right_stream: &Stream<BinaryData>,
-) -> Stream<BinaryData> {
+    left_stream: &OperatorStream<BinaryData>,
+    right_stream: &OperatorStream<BinaryData>,
+) -> OperatorStream<BinaryData> {
+    let name_string = name.to_string();
     erdos::connect_two_in_one_out(
         move || {
+            let name_string = name_string.clone();
             JoinOperator::new(move |x: &[BinaryData], y: &[BinaryData]| {
                 if x.len() == 0 || y.len() == 0 {
                     return vec![];
@@ -65,6 +74,11 @@ fn connect_join(
                 assert_eq!(y.len(), 1);
                 let mut data = BinaryData::new(msg_size);
                 data.send_time = x[0].send_time.min(y[0].send_time);
+
+                let latency = erdos_experiments::ns_since_unix_epoch() - data.send_time;
+                let latency_us = latency as f64 / 1e3;
+                tracing::info!("{}: latency: {}", name_string, latency_us);
+
                 vec![data]
             })
         },
