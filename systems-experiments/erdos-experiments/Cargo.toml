@@ -10,6 +10,7 @@ abomonation = "0.7.3"
 abomonation_derive = "0.5.0"
 clap = "2.33.0"
 csv = "1.1.6"
-erdos = { git = "https://github.com/erdos-project/erdos.git", rev = "3b1235a" }
+# erdos = { git = "https://github.com/erdos-project/erdos.git", rev = "3b1235a" }
+erdos = { git = "https://github.com/pschafhalter/erdos.git", branch = "improve-runtime"  }
 serde = "1.0.115"
 tracing = "0.1.29"
