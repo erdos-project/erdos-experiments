@@ -25,4 +25,4 @@ services:
             jobmanager.rpc.address: jobmanager
             taskmanager.numberOfTaskSlots: 1
 
-        scale: 10
+        scale: ${TASK_SLOTS:-10}

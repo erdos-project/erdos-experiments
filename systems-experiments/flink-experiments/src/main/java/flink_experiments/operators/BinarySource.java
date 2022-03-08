@@ -3,6 +3,7 @@ package flink_experiments.operators;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
+import org.apache.flink.streaming.api.watermark.Watermark;
 
 import flink_experiments.messages.BinaryData;
 
