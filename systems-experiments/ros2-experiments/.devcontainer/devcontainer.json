@@ -1,0 +1,20 @@
+{
+    "name": "ros2-sosp-experiments",
+    "dockerFile": "Dockerfile",
+    "extensions": [
+        "ms-vscode.cpptools",
+        "ms-iot.vscode-ros"
+    ],
+    "runArgs": [
+        "--cap-add=SYS_PTRACE",
+        "--security-opt",
+        "seccomp=unconfined",
+        "-v",
+        "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "workspaceMount": "src=${localWorkspaceFolder},dst=/ros2-experiments,type=bind,consistency=cached",
+    "workspaceFolder": "/ros2-experiments"
+}
