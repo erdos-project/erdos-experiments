@@ -23,6 +23,28 @@ mv planning-absolute-jerk.pdf graphs/
 python3 plot_apollo_rosbag_analysis.py --files=../experiments/apollo/sensor_perception_prediction_timeline_apollo_1.5.csv --file_name=apollo_timeline --file_format=pdf --paper_mode
 mv apollo_timeline.pdf graphs/
 
+HOST="erdos3"
+# Figure 8a: Latency for different message sizes.
+python3 plot_msg_size_latency.py \
+    "../eurosys_systems_experiments/$HOST/erdos/msg-size-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/msg-size-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/erdos/msg-size-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/msg-size-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/ros/msg-size-latency-inter-process.csv"
+
+# Figure 8b: Latency for broadcast communication patterns.
+python3 plot_broadcast_latency.py \
+    "../eurosys_systems_experiments/$HOST/erdos/broadcast-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/broadcast-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/erdos/broadcast-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/broadcast-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/ros/broadcast-latency-inter-process.csv"
+
+# Figure 8c: Latency for a synthetic pipeline at different scales.
+python3 plot_synthetic_pipeline.py \
+    "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-inter-process.csv"
+
 # Figure 9: Mode changes for detection and planning.
 python3 plot_mode_changes.py --base_dir=../experiments/challenge/mode_changes/ --file_format=pdf --paper_mode
 mv pylot-mode-changes.pdf graphs/

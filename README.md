@@ -1,5 +1,7 @@
-This repository contains scripts to download our experiment data, to reproduce
-our figures, and instructions on how to reproduce our experiments.
+This repository contains scripts to download experiment data, to reproduce
+figures, and instructions on how to reproduce experiments for
+*D3: A Dynamic Deadline-Driven Approach for Building Autonomous Vehicles*,
+which is to appear at [EuroSys 2022](https://2022.eurosys.org/).
 
 # Downloading log data of experiments and generating graphs
 
@@ -15,7 +17,105 @@ cd plotting_scripts
 
 # Executing experiments
 
-## Executing system experiments
+## Executing system experiments (Figure 8)
+We benchmark ERDOS's performance against ROS, a robotics middleware which has
+been used to develop AVs, and Flink, a streaming system that provides similar
+time management features to ERDOS (e.g., timestamping and watermarks).
+
+We measure performance for several common communication patterns for both
+inter-process and intra-process communication, including:
+
+- Sending messages of various sizes ([Figure 8a](plotting_scripts/graphs/msg_size_latency.pdf))
+- Broadcasting messages to varying numbers of receivers ([Figure 8b](plotting_scripts/graphs/broadcast_latency.pdf))
+- Scaling up an emulated AV pipeline ([Figure 8c](plotting_scripts/graphs/synthetic_pipeline_latency.pdf))
+
+## Setup instructions
+To run the experiments, ensure that the following programs are installed:
+
+- Rust
+- Pandas python library
+- Maven
+- Docker
+- docker-compose
+
+To install these applications, run
+```console
+bash systems-experiments/scripts/install_dependencies.sh
+```
+
+### Executing systems experiments
+
+#### ERDOS
+To run all ERDOS experiments, run
+```console
+cd systems-experiments/erdos-experiments
+bash scripts/run_all.sh
+```
+
+The results are stored as CSVs under `systems-experiments/erdos-experiments/results/$(hostname)/`.
+
+For more information, see the [ERDOS experiments README](systems-experiments/erdos-experiments/README.md).
+
+#### Flink
+To run all Flink experiments, run
+```console
+cd systems-experiments/flink-experiments
+bash scripts/run_all.sh
+```
+
+The results are stored as CSVs under `systems-experiments/flink-experiments/results/$(hostname)/`.
+
+For more information, see the [Flink experiments README](systems-experiments/flink-experiments/README.md).
+
+#### ROS
+To run all ROS experiments, run
+```console
+cd systems-experiments/ros-experiments
+bash scripts/run_all.sh
+```
+
+The results are stored as CSVs under `systems-experiments/ros-experiments/results/$(hostname)/`.
+
+For more information, see the [ROS experiments README](systems-experiments/ros-experiments/README.md).
+
+### Plotting message size vs. latency ([Figure 8a](plotting_scripts/graphs/msg_size_latency.pdf))
+Generate the graph by executing the following commands from the current folder:
+
+```console
+cd ${ERDOS_EXPERIMENTS_HOME}/plotting_scripts
+HOST=$(hostname)   # Set to another value if generating plots on a different machine
+python3 plot_msg_size_latency.py \
+    "../eurosys_systems_experiments/$HOST/erdos/msg-size-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/msg-size-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/erdos/msg-size-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/msg-size-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/ros/msg-size-latency-inter-process.csv"
+```
+
+### Plotting broadcast latency ([Figure 8b](plotting_scripts/graphs/broadcast_latency.pdf))
+Generate the graph by executing the following commands from the current folder:
+
+```console
+cd ${ERDOS_EXPERIMENTS_HOME}/plotting_scripts
+HOST=$(hostname)   # Set to another value if generating plots on a different machine
+python3 plot_broadcast_latency.py \
+    "../eurosys_systems_experiments/$HOST/erdos/broadcast-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/broadcast-latency-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/erdos/broadcast-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/flink/broadcast-latency-inter-process.csv" \
+    "../eurosys_systems_experiments/$HOST/ros/broadcast-latency-inter-process.csv"
+```
+
+### Plotting synthetic pipeline latency
+Generate the graph by executing the following commands from the current folder:
+
+```console
+cd ${ERDOS_EXPERIMENTS_HOME}/plotting_scripts
+HOST=$(hostname)   # Set to another value if generating plots on a different machine
+python3 plot_synthetic_pipeline.py \
+    "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-intra-process.csv" \
+    "../eurosys_systems_experiments/$HOST/erdos/synthetic-pipeline-intra-process.csv"
+```
 
 ## Executing autonomous driving experiments
 

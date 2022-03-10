@@ -40,5 +40,3 @@ How each file relates to the figures:
 - `broadcast-latency-intra-process.csv`: figure 8b: left half.
 - `msg-size-latency-inter-process.csv`: figure 8a: right half.
 - `msg-size-latency-intra-process.csv`: figure 8a: left half.
-
-## Plotting (TODO)

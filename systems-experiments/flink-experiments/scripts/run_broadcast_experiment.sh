@@ -14,6 +14,9 @@ ANALYZE_PERFORMANCE=$7
 # Compile
 mvn package
 
+# Launch cluster
+docker-compose up -d
+
 # Set up head.
 JOBMANAGER_CONTAINER=$(docker ps --filter name=jobmanager --format={{.ID}})
 docker cp ./target/flink-experiments-0.1.jar "$JOBMANAGER_CONTAINER":/job.jar
@@ -52,3 +55,5 @@ do
     docker exec "$NODE" rm -rf /tmp/experiments
 done
 
+# Shut down cluster
+docker-compose down
