@@ -20,14 +20,11 @@ def bold(s):
 
 collisions = pd.DataFrame({
     # orange, gray, yellow, green
-    "setup": [
-        "Periodic\n(ROS)", "No\ndeadlines", "Static\ndeadlines",
-        "Dynamic\ndeadlines"
-    ],
+    "setup": ["Periodic", "Data-Driven", "D3 (Static Deadlines)", "D3"],
     "collisions": [78, 36, 34, 25]
 })
 
-fig = plt.figure(figsize=(3.33, 0.8))
+fig = plt.figure(figsize=(5, 0.8))
 set_paper_rcs()
 
 colors = pylot_color_utils.get_colors(

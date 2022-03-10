@@ -4,6 +4,7 @@ import math
 from absl import app, flags
 
 import matplotlib
+
 matplotlib.use("agg")
 import matplotlib.pyplot as plt
 
@@ -148,22 +149,24 @@ def main(argv):
                           hue='configuration',
                           hue_order=['policy', 'deadlines'],
                           palette=[colors[2], colors[1]],
-                          binwidth=1,
+                          binwidth=2,
+                          stat='probability',
                           element='step')
-        #stat='density')
         ax.legend(  #handles=handles[0:],
-            labels=['Static deadlines', 'Dynamic deadlines'],
+            labels=['D3 (Static Deadlines)', 'D3'],
             framealpha=0,
-            loc=(0.01, 0.8),
-            ncol=2,
-            columnspacing=14,
+            loc=(0.03, 0.6),
+            ncol=1,
+            columnspacing=1,
             handlelength=0.5,
             handletextpad=0.3)
         #            bbox_to_anchor=(0.1, 1.25))
         plt.xlim(0)
-        plt.yticks([x for x in range(0, 10001, 2000)],
-                   [str(x) for x in range(0, 10001, 2000)])
+        #        ys = [0.000, 0.004, 0.008, 0.012, 0.016]
+        #        ysstr = ['0.0', '0.4', '0.8', '1.2', '1.6']
+        #        plt.yticks(ys, ysstr)
         plt.xlabel('Response time [ms]')
+        plt.ylabel('Relative Frequency')
         # ax.axvline(209, 0.0, 1.0, ls='--', color='r')
         # ax.axvline(269, 0.0, 1.0, ls='--', color='r')
         # ax.axvline(433, 0.0, 1.0, ls='--', color='r')

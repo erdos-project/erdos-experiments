@@ -4,6 +4,7 @@ import math
 from absl import app, flags
 
 import matplotlib
+
 matplotlib.use("agg")
 import matplotlib.pyplot as plt
 
@@ -325,7 +326,7 @@ def main(argv):
     #           handletextpad=0.3)
     ax.get_legend().remove()
     ax.legend(handles=handles[0:2],
-              labels=['No deadlines', 'Deadlines'],
+              labels=['Without $D_{EH}$', 'With $D_{EH}$'],
               framealpha=0,
               loc="upper left",
               ncol=1,

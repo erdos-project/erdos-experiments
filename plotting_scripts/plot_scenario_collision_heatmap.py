@@ -81,7 +81,7 @@ def traffic_jam_scenario_results():
             lambda x: x[0][0] % 2 == 0, traffic_jam_speeds.items())] + [
                 pd.DataFrame({
                     "target_speed": [12],
-                    "deadline": ["dyn"],
+                    "deadline": ["D3"],
                     "collision_speed": [6.8]
                 })
             ])).reset_index().pivot(
@@ -167,7 +167,7 @@ def person_behind_car_results():
             [
                 pd.DataFrame({
                     "target_speed": [13],
-                    "deadline": ["dyn"],
+                    "deadline": ["D3"],
                     "collision_speed": [8.7]
                 })
             ])).reset_index().pivot(
@@ -200,7 +200,7 @@ def main(argv):
     for i in range(0, 2):
         ax = axes[0][i]
         df = dfs[i]
-        g = sns.heatmap(df[df.index == "dyn"],
+        g = sns.heatmap(df[df.index == "D3"],
                         cmap="RdYlGn_r",
                         annot=True,
                         linewidths=1.0,

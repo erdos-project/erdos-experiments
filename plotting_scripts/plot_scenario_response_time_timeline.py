@@ -19,6 +19,7 @@ flags.DEFINE_string(
 
 
 class Result:
+
     def __init__(self):
         self.end_to_end_runtimes = {}
         self.detection_runtimes = {}
@@ -265,11 +266,11 @@ def main(argv):
               lw=1)
 
     # Add the required text
-    ax.text(13.5, 395, 'Static Deadline', color='red')
-    ax2.text(13.5, 380, 'Dynamic Deadline', color='red')
+    ax.text(13.35, 395, 'D3 (Static Deadlines)', color='red', fontsize=7)
+    ax2.text(13.4, 380, 'D3 (Dynamic Deadlines)', color='red', fontsize=7)
 
-    ax.text(11.47, 350, 'Visible', color='k')
-    ax.text(12.45, 350, 'Collision', color='k')
+    ax.text(11.47, 350, 'Visible', color='k', fontsize=7)
+    ax.text(12.6, 350, 'Collision', color='k', fontsize=7)
 
     legend_elements = [
         Patch(facecolor=e2e_color, label="Total"),
