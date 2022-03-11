@@ -3,8 +3,8 @@
 FREQUENCY="30.0"
 MSG_SIZE=6220800    # Approx 6 MB, size of a 1080p camera frame.
 
-NUM_WARMUP_MSGS=100
-NUM_MSGS=10000
+NUM_WARMUP_MSGS=10
+NUM_MSGS=10
 
 OUT_DIR="results/$(hostname)/"
 TMP_DIR="/tmp/erdos-experiments/"
@@ -17,24 +17,33 @@ TOTAL_MSGS=$(($NUM_WARMUP_MSGS + $NUM_MSGS))
 colcon build
 . install/setup.bash
 
-csv_filename="$OUT_DIR/broadcast-latency-intra-process.csv"    
+csv_filename="$OUT_DIR/broadcast-latency-inter-process.csv"    
 tmp_files=()
 for num_receivers in {1..5}
 do
-    filename="$TMP_DIR/broadcast-$num_receivers-intra-process.csv"    
+    filename="$TMP_DIR/broadcast-$num_receivers-inter-process.csv"    
     tmp_files+=("$filename")
 
-    ros2 run latency broadcast $num_receivers \
-        --ros-args \
-        -p msg_size:=$MSG_SIZE \
-        -p num_msgs:=$TOTAL_MSGS \
-        -p frequency:=$FREQUENCY \
+    ros2 run latency csv_sink_driver --ros-args \
         -p warmup_samples:=$NUM_WARMUP_MSGS \
         -p samples:=$NUM_MSGS \
-        -p is_inter_process:=false \
-        -p filename:=$filename
+        -p filename:=$filename &
 
-    python3 ../scripts/add_column_to_csv.py \    
+    for i in $(seq 1 $num_receivers)
+    do
+        ros2 run latency receiver_driver --ros-args \
+            -p is_inter_process:=true \
+            -r __node:="receiver_$i" &
+    done
+
+    ros2 run latency binary_source_driver --ros-args \
+        -p msg_size:=$MSG_SIZE \
+        -p num_msgs:=$TOTAL_MSGS
+
+    # Wait for the remaining processes to finish.
+    sleep 1
+
+    python3 ../scripts/add_column_to_csv.py \
             -i $filename -o $filename -c "num_receivers" -v $num_receivers
 done
 

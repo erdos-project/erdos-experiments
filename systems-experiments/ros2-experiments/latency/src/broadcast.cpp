@@ -13,14 +13,6 @@ int main(int argc, char *argv[]) {
     std::cout << "Please specify the number of receivers" << std::endl;
   }
 
-  // if (argc < 7) {
-  //   std::cout << "Usage: ros2 run latency broadcast --ros-args -p num_msgs=[num_msgs]
-  //   -p msg_size=[msg_size] [msg_size] [num_receivers] [frequency] "
-  //                "[output_filename] [num_warmup_samples] [num_samples]"
-  //             << std::endl;
-  //   return 1;
-  // }
-
   // Uses all threads available on the machine.
   rclcpp::executors::MultiThreadedExecutor exec;
 

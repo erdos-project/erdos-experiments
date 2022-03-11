@@ -84,6 +84,31 @@ target_link_libraries(broadcast
 ament_target_dependencies(broadcast
   "rclcpp")
 
+add_executable(binary_source_driver
+  src/binary_source_driver.cpp)
+target_link_libraries(binary_source_driver
+  binary_source)
+ament_target_dependencies(binary_source_driver
+  "rclcpp")
+
+add_executable(receiver_driver
+  src/receiver_driver.cpp)
+target_link_libraries(receiver_driver
+  binary_source
+  receiver
+  csv_sink)
+ament_target_dependencies(receiver_driver
+  "rclcpp")
+
+add_executable(csv_sink_driver
+  src/csv_sink_driver.cpp)
+target_link_libraries(csv_sink_driver
+  binary_source
+  receiver
+  csv_sink)
+ament_target_dependencies(csv_sink_driver
+  "rclcpp")
+
 install(TARGETS
   binary_source
   receiver
@@ -95,6 +120,9 @@ install(TARGETS
 
 install(TARGETS
   broadcast
+  binary_source_driver
+  receiver_driver
+  csv_sink_driver
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
