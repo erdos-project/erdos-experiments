@@ -1,4 +1,4 @@
-#include "latency/receiver.hpp"
+#include "latency/map.hpp"
 
 int main(int argc, char *argv[]) {
   rclcpp::init(argc, argv);
@@ -7,8 +7,8 @@ int main(int argc, char *argv[]) {
 
   rclcpp::NodeOptions options;
 
-  auto receiver = std::make_shared<latency::Receiver>(options);
-  exec.add_node(receiver);
+  auto map = std::make_shared<latency::Map>(options);
+  exec.add_node(map);
 
   exec.spin();
 
