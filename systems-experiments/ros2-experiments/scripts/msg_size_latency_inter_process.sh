@@ -13,6 +13,9 @@ mkdir -p "$TMP_DIR"
 
 TOTAL_MSGS=$(($NUM_WARMUP_MSGS + $NUM_MSGS))
 
+# Configure DDS to work with 10MB messages.
+export CYCLONEDDS_URI="$(pwd)/dds_config.xml"
+
 colcon build
 . install/setup.bash
 
