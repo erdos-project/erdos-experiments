@@ -34,7 +34,7 @@ do
         -p is_inter_process:=false \
         -p filename:=$filename
 
-    python3 ../scripts/add_column_to_csv.py \    
+    python3 ../scripts/add_column_to_csv.py \
             -i $filename -o $filename -c "num_receivers" -v $num_receivers
 done
 
