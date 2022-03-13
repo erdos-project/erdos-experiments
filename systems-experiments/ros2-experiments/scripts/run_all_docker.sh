@@ -5,4 +5,6 @@ docker run -it -h `hostname` --mount type=bind,src="$(pwd)/../",dst=/experiments
     . scripts/broadcast_latency_intra_process.sh;
     . scripts/broadcast_latency_inter_process.sh;
     . scripts/msg_size_latency_intra_process.sh;
-    . scripts/msg_size_latency_inter_process.sh"
+    . scripts/msg_size_latency_inter_process.sh;
+    . scripts/synthetic_pipeline_intra_process.sh;
+    . scripts/synthetic_pipeline_inter_process.sh"

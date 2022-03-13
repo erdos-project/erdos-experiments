@@ -75,6 +75,32 @@ rosidl_target_interfaces(csv_sink
 rclcpp_components_register_nodes(csv_sink "latency::CSVSink")
 set(node_plugins "${node_plugins}latency::CSVSink;$<TARGET_FILE:csv_sink>\n")
 
+add_library(map SHARED
+  src/map.cpp)
+target_compile_definitions(map
+  PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(map
+  "rclcpp"
+  "rclcpp_components"
+)
+rosidl_target_interfaces(map
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+rclcpp_components_register_nodes(map "latency::Map")
+set(node_plugins "${node_plugins}latency::Map;$<TARGET_FILE:map>\n")
+
+add_library(join SHARED
+  src/join.cpp)
+target_compile_definitions(join
+  PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(join
+  "rclcpp"
+  "rclcpp_components"
+)
+rosidl_target_interfaces(join
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+rclcpp_components_register_nodes(join "latency::Join")
+set(node_plugins "${node_plugins}latency::Join;$<TARGET_FILE:join>\n")
+
 add_executable(broadcast
   src/broadcast.cpp)
 target_link_libraries(broadcast
@@ -94,25 +120,55 @@ ament_target_dependencies(binary_source_driver
 add_executable(receiver_driver
   src/receiver_driver.cpp)
 target_link_libraries(receiver_driver
-  binary_source
-  receiver
-  csv_sink)
+  receiver)
 ament_target_dependencies(receiver_driver
   "rclcpp")
 
 add_executable(csv_sink_driver
   src/csv_sink_driver.cpp)
 target_link_libraries(csv_sink_driver
-  binary_source
-  receiver
   csv_sink)
 ament_target_dependencies(csv_sink_driver
+  "rclcpp")
+
+add_executable(map_driver
+  src/map_driver.cpp)
+target_link_libraries(map_driver
+  map)
+ament_target_dependencies(map_driver
+  "rclcpp")
+
+add_executable(join_two_driver
+  src/join_two_driver.cpp)
+target_link_libraries(join_two_driver
+  join)
+ament_target_dependencies(join_two_driver
+  "rclcpp")
+
+add_executable(join_three_driver
+  src/join_three_driver.cpp)
+target_link_libraries(join_three_driver
+  join)
+ament_target_dependencies(join_three_driver
+  "rclcpp")
+
+add_executable(synthetic_pipeline
+  src/synthetic_pipeline.cpp)
+target_link_libraries(synthetic_pipeline
+  binary_source
+  receiver
+  csv_sink
+  map
+  join)
+ament_target_dependencies(synthetic_pipeline
   "rclcpp")
 
 install(TARGETS
   binary_source
   receiver
   csv_sink
+  map
+  join
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -123,6 +179,10 @@ install(TARGETS
   binary_source_driver
   receiver_driver
   csv_sink_driver
+  map_driver
+  join_two_driver
+  join_three_driver
+  synthetic_pipeline
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

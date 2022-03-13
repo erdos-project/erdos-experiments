@@ -1,4 +1,4 @@
-#include "latency/receiver.hpp"
+#include "latency/join.hpp"
 
 int main(int argc, char *argv[]) {
   rclcpp::init(argc, argv);
@@ -7,8 +7,8 @@ int main(int argc, char *argv[]) {
 
   rclcpp::NodeOptions options;
 
-  auto receiver = std::make_shared<latency::Receiver>(options);
-  exec.add_node(receiver);
+  auto join = std::make_shared<latency::Join>(options);
+  exec.add_node(join);
 
   exec.spin();
 

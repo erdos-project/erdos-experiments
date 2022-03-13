@@ -1,5 +1,5 @@
 {
-    "name": "ros2-sosp-experiments",
+    "name": "ros2-eurosys-experiments",
     "dockerFile": "Dockerfile",
     "extensions": [
         "ms-vscode.cpptools",
@@ -10,7 +10,7 @@
         "--security-opt",
         "seccomp=unconfined",
         "-v",
-        "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh"
+        "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh",
     ],
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
