@@ -49,13 +49,14 @@ int main(int argc, char *argv[]) {
 
     for (const auto &join_name : join_names) {
       std::string name = "pipeline_" + std::to_string(i) + "_" + join_name;
-      auto map = std::make_shared<latency::Join>(options, name);
-      exec.add_node(map);
-      maps.push_back(map);
+      auto join = std::make_shared<latency::Join>(options, name);
+      exec.add_node(join);
+      joins.push_back(join);
     }
 
     std::string receiver_name = "pipeline_" + std::to_string(i) + "_receiver";
     auto receiver = std::make_shared<latency::Receiver>(options, receiver_name);
+    exec.add_node(receiver);
     receivers.push_back(receiver);
   }
 

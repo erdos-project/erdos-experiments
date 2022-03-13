@@ -98,7 +98,7 @@ ament_target_dependencies(join
 )
 rosidl_target_interfaces(join
   ${PROJECT_NAME} "rosidl_typesupport_cpp")
-rclcpp_components_register_nodes(map "latency::Join")
+rclcpp_components_register_nodes(join "latency::Join")
 set(node_plugins "${node_plugins}latency::Join;$<TARGET_FILE:join>\n")
 
 add_executable(broadcast
@@ -120,17 +120,13 @@ ament_target_dependencies(binary_source_driver
 add_executable(receiver_driver
   src/receiver_driver.cpp)
 target_link_libraries(receiver_driver
-  binary_source
-  receiver
-  csv_sink)
+  receiver)
 ament_target_dependencies(receiver_driver
   "rclcpp")
 
 add_executable(csv_sink_driver
   src/csv_sink_driver.cpp)
 target_link_libraries(csv_sink_driver
-  binary_source
-  receiver
   csv_sink)
 ament_target_dependencies(csv_sink_driver
   "rclcpp")
@@ -156,11 +152,23 @@ target_link_libraries(join_three_driver
 ament_target_dependencies(join_three_driver
   "rclcpp")
 
+add_executable(synthetic_pipeline
+  src/synthetic_pipeline.cpp)
+target_link_libraries(synthetic_pipeline
+  binary_source
+  receiver
+  csv_sink
+  map
+  join)
+ament_target_dependencies(synthetic_pipeline
+  "rclcpp")
+
 install(TARGETS
   binary_source
   receiver
   csv_sink
   map
+  join
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -174,6 +182,7 @@ install(TARGETS
   map_driver
   join_two_driver
   join_three_driver
+  synthetic_pipeline
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
